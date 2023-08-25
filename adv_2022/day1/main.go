@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -13,11 +14,14 @@ const fileName = "input_day_1.txt"
 func main() {
   var mostCalories int
   var calories int
+  caloriesList := []int{}
+
   fileContent, err := os.ReadFile(fileName)
   if err != nil {
     log.Fatal(err)
     return
   }
+
   fileContentToString := string(fileContent)
   splitedString := strings.Split(fileContentToString, "\n")
   for _, line := range splitedString {
@@ -25,6 +29,7 @@ func main() {
       if calories > mostCalories {
         mostCalories = calories
       }
+      caloriesList = append(caloriesList, calories)
       calories = 0
       continue
     }
@@ -35,5 +40,13 @@ func main() {
     }
     calories += intCalorie
   }
-  fmt.Println(mostCalories)
+  sort.Slice(caloriesList, func(i, j int) bool {
+      return caloriesList[i] > caloriesList[j]
+  })
+  sum := 0
+  for _, num := range caloriesList[:3] {
+    fmt.Println(num)
+    sum += num
+  }
+  fmt.Println("Answer: ", sum)
 }
