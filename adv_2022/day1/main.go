@@ -15,13 +15,11 @@ func main() {
   var mostCalories int
   var calories int
   caloriesList := []int{}
-
   fileContent, err := os.ReadFile(fileName)
   if err != nil {
     log.Fatal(err)
     return
   }
-
   fileContentToString := string(fileContent)
   splitedString := strings.Split(fileContentToString, "\n")
   for _, line := range splitedString {
